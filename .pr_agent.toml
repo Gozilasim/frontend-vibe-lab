@@ -4,6 +4,12 @@ fallback_models = ["groq/llama-3.1-8b-instant"]
 custom_model_max_tokens = 8000
 max_model_tokens = 8000
 
+[github_action_config]
+auto_review = true
+auto_describe = false
+auto_improve = false
+pr_actions = ["opened", "reopened", "synchronize"]
+
 [pr_reviewer]
 extra_instructions = """
 You are a senior engineer reviewing a pull request.
