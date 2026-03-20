@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LayoutDashboard, Users, Settings, MessageSquare, Menu, Activity, Puzzle, ShieldCheck, X } from 'lucide-react';
+import { LayoutDashboard, Users, Settings, MessageSquare, Activity, Puzzle, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import './Sidebar.css'; 
 
 const navItems = [
@@ -26,16 +26,8 @@ export const Sidebar = () => {
     <aside className={`sidebar glass-panel ${isCollapsed ? 'collapsed' : ''}`}>
       <div className="sidebar-header">
         <div className="logo-container">
-          <div className="logo-mark">N</div>
-          {!isCollapsed && <span className="logo-text">Nova</span>}
+          {!isCollapsed && <span className="logo-text">Live Preview</span>}
         </div>
-        <button 
-          className="collapse-btn" 
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          aria-label="Toggle Sidebar"
-        >
-          {isCollapsed ? <Menu size={20} /> : <X size={20} />}
-        </button>
       </div>
       
       <nav className="sidebar-nav">
@@ -55,6 +47,15 @@ export const Sidebar = () => {
         })}
       </nav>
 
+      <div className="sidebar-footer" style={{ display: 'flex', justifyContent: isCollapsed ? 'center' : 'flex-end', padding: isCollapsed ? '16px 0' : '16px 20px' }}>
+        <button 
+          className="collapse-btn" 
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          aria-label="Toggle Sidebar"
+        >
+          {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+        </button>
+      </div>
     </aside>
   );
 };
