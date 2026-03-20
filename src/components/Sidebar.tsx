@@ -47,13 +47,25 @@ export const Sidebar = () => {
         })}
       </nav>
 
-      <div className="sidebar-footer" style={{ display: 'flex', justifyContent: isCollapsed ? 'center' : 'flex-end', padding: isCollapsed ? '16px 0' : '16px 20px' }}>
+      <div className="sidebar-footer" style={{ display: 'flex', padding: isCollapsed ? '16px 0' : '16px 20px' }}>
         <button 
           className="collapse-btn" 
           onClick={() => setIsCollapsed(!isCollapsed)}
           aria-label="Toggle Sidebar"
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: isCollapsed ? 'center' : 'flex-end',
+            borderRadius: 'var(--btn-radius, 8px)',
+            padding: isCollapsed ? '8px' : '8px 12px'
+          }}
         >
-          {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+          {isCollapsed ? <ChevronRight size={20} /> : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '0.85rem' }}>Collapse</span>
+              <ChevronLeft size={20} />
+            </div>
+          )}
         </button>
       </div>
     </aside>
