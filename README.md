@@ -1,73 +1,40 @@
-# React + TypeScript + Vite
+# 🎨 Frontend Vibe Lab (AI Prompt Prototyper)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Live Demo](https://img.shields.io/badge/Live_Demo-frontendpromptdesign.vercel.app-10b981?style=for-the-badge)](https://frontendpromptdesign.vercel.app/)
 
-Currently, two official plugins are available:
+A purely frontend layout and design sandbox application. You can either visit the [live website above](https://frontendpromptdesign.vercel.app/) to preview the engine immediately, or clone this repository to run the playground locally. This project contains **no backend** and is built strictly as a visual prototyping playground.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🌟 The Core Concept
 
-## React Compiler
+The ultimate purpose of this application is to serve as a **Visual Prompt Generator for AI Assistants**. 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Instead of struggling to describe aesthetics like "Make it look like a modern glassmorphism UI with bouncy animations" to your AI coding assistant (like Cursor, GitHub Copilot, or Claude), you can use this lab to visually engineer your prompt:
 
-## Expanding the ESLint configuration
+1. **Tune the Engine**: Go to the **Settings** page and visually customize the *Art Direction* (colors/backgrounds), *Visual Direction* (borders/shadows/radius), and *Design Language* (physics/animations).
+2. **Preview Realistically**: Switch to the *Dashboard*, *Analytics*, or *Integrations* pages to see exactly how your customized CSS engine behaves on complex, domain-specific SaaS layouts.
+3. **Generate the Prompt (*Coming Soon*)**: Once you love the design, a future update will allow you to click a button to instantly generate a highly technical **Prompt Block**. 
+4. **Deploy to Your AI**: Copy the generated prompt rules and paste them directly into your own project's `AGENT.MD` or `.cursorrules`. Your AI agent will ingest these strict CSS architectural rules and perfectly reproduce your customized design system!
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Key Features
+- **Real-Time Theme Engine**: Swap between vastly different aesthetics (Neobrutalism, Deep Space Glassmorphism, Clean Corporate) instantly, driven purely by highly decoupled CSS Variables.
+- **Authentic Page Skeletons**: Unlike generic templates, this app features deeply complex layout structures:
+  - **Dashboard**: A fluid Bento-box grid.
+  - **Analytics**: An edge-to-edge borderless metric canvas with pure CSS data visualizations.
+  - **Integrations**: A heavy App Directory grid.
+  - **Security**: A strict Audit Ledger terminal.
+- **Zero Backend Dependencies**: 100% Client-side React + Vite + TypeScript application (No database, no APIs).
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 How to Run Locally
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Get the sandbox running in seconds:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Start the Vite dev server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+*Note: The "Generate `AGENT.MD` Prompt" translation feature is currently on the roadmap. For now, this lab serves as the ultimate reference environment to test and engineer advanced structural CSS design systems.*
