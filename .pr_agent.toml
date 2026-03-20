@@ -1,0 +1,31 @@
+[config]
+model = "openrouter/qwen/qwen2.5-coder:free"
+fallback_models = ["openrouter/qwen/qwen2.5-coder:free"]
+custom_model_max_tokens = 8000
+max_model_tokens = 8000
+
+[pr_reviewer]
+extra_instructions = """
+You are a senior engineer reviewing a pull request.
+
+Focus only on:
+- real bugs
+- logical mistakes
+- security risks
+- performance problems
+
+Ignore:
+- style
+- formatting
+- naming preferences
+- minor refactoring suggestions
+
+Rules:
+- Be concise
+- Maximum 3 comments
+- Each comment must explain the problem and why it is risky
+- If there is no real issue, say: No critical issues found.
+"""
+
+[pr_code_suggestions]
+num_code_suggestions = 0
