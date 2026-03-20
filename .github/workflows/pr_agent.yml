@@ -1,0 +1,23 @@
+name: PR Agent
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  pr_agent_job:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+      contents: write
+
+    steps:
+      - name: PR Agent Review
+        uses: qodo-ai/pr-agent@main
+        env:
+          OPENAI_API_KEY: ${{ secrets.LLM_KEY }}
+          OPENAI_API_BASE: https://openrouter.ai/api/v1
+          CONFIG.MODEL: deepseek/deepseek-chat:free
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_action.auto_review: "true"
