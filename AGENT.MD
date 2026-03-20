@@ -26,3 +26,4 @@ When implementing or switching between Dark/Light modes, or different Art/Visual
 - **Why**: If you hardcode values, every preview variant renders identically because the numbers never change regardless of which option is being previewed. The entire purpose of the preview is to show *real differences* between options. Only by binding to the CSS variables — which are overridden per `data-theme` / `data-visual` / `data-design` attribute — will each option produce genuinely distinct visual output.
 - **Design Language special rule**: Since Design Language controls *interaction physics* (timing, easing, scale, lift), its preview should NOT alternate between "Current Style" and "Target Style". Instead, it must **lock** to the hovered target value so the motion engine's behavior is continuously and clearly visible.
 
+1
