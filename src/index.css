@@ -1,0 +1,394 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Default Nova Theme (Glassmorphism + Vibrant) */
+  --border-width: 1px;
+  --motion-duration: 0.3s;
+  --motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --hover-lift: -2px;
+  --active-scale: 0.98;
+  --bg-color: #0f172a;
+  --bg-gradient: linear-gradient(135deg, #09090b 0%, #1e1b4b 100%);
+  --surface-color: rgba(30, 41, 59, 0.4);
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --primary-color: #8b5cf6;
+  --primary-hover: #7c3aed;
+  --primary-glow: rgba(139, 92, 246, 0.4);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 80px;
+  --transition-speed: 0.3s;
+  
+  --card-bg: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.4) 100%);
+  --blur-amount: 16px;
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --card-radius: 16px;
+  --btn-radius: 12px;
+  --layout-decoration: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+}
+
+[data-theme="editorial-dark"] {
+  /* Editorial Dark - Typography-led, subdued, calm, flat */
+  --bg-color: #111111;
+  --bg-gradient: none;
+  --surface-color: transparent;
+  --surface-border: #333333;
+  --primary-color: #ffffff;
+  --primary-hover: #cccccc;
+  --primary-glow: transparent;
+  --text-main: #ffffff;
+  --text-muted: #888888;
+  
+  --card-bg: transparent;
+  --blur-amount: 0px;
+  --card-shadow: none;
+  --card-radius: 0px;
+  --btn-radius: 4px;
+  --layout-decoration: none;
+}
+
+[data-theme="control-room"] {
+  /* Control Room - Dense, pure black, bright accents for status */
+  --bg-color: #000000;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #0a192f 0%, #000000 100%);
+  --surface-color: #050b14;
+  --surface-border: #1e2d3d;
+  --primary-color: #00ffcc;
+  --primary-hover: #00ccaa;
+  --primary-glow: rgba(0, 255, 204, 0.2);
+  --text-main: #e6f1ff;
+  --text-muted: #64748b;
+  
+  --card-bg: #050b14;
+  --blur-amount: 0px;
+  --card-shadow: 0 0 0 1px #1e2d3d;
+  --card-radius: 4px;
+  --btn-radius: 4px;
+  --layout-decoration: none;
+}
+
+[data-theme="soft-minimal"] {
+  /* Soft Minimal - Clean, high contrast light mode, very quiet */
+  --bg-color: #f7f7f8;
+  --bg-gradient: none;
+  --surface-color: #ffffff;
+  --surface-border: #e2e8f0;
+  --primary-color: #0f172a;
+  --primary-hover: #334155;
+  --primary-glow: rgba(0, 0, 0, 0.05);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  
+  --card-bg: #ffffff;
+  --blur-amount: 0px;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --card-radius: 12px;
+  --btn-radius: 8px;
+  --layout-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-gradient) var(--bg-color);
+  background-attachment: fixed;
+  color: var(--text-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--surface-color);
+  backdrop-filter: blur(var(--blur-amount));
+  -webkit-backdrop-filter: blur(var(--blur-amount));
+  border: var(--border-width, 1px) solid var(--surface-border);
+  transition: all var(--motion-duration) var(--motion-easing);
+}
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(var(--blur-amount));
+  border: var(--border-width, 1px) solid var(--surface-border);
+  border-radius: var(--card-radius);
+  padding: 24px;
+  box-shadow: var(--card-shadow);
+  transition: all var(--motion-duration) var(--motion-easing);
+}
+
+.glass-card:hover {
+  transform: translateY(var(--hover-lift));
+  border-color: var(--primary-glow);
+}
+
+/* Typography styles */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5em;
+  color: var(--text-main);
+}
+
+h1 {
+  font-size: 2.5rem;
+  /* Instead of gradient text for everything, let the theme define text color */
+  color: var(--text-main);
+}
+
+p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Global button styles */
+.btn {
+  background: var(--primary-color);
+  color: var(--bg-color);
+  border: none;
+  border-radius: var(--btn-radius);
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--motion-duration) var(--motion-easing);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+.btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(var(--hover-lift));
+  box-shadow: 0 6px 20px var(--primary-glow);
+}
+
+.btn:active {
+  transform: translateY(0) scale(var(--active-scale));
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-border);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* --- VISUAL DIRECTION OVERRIDES --- */
+/* These override existing properties regardless of Art Direction base theme */
+
+[data-visual="typography-led"] {
+  --surface-color: transparent !important;
+  --surface-border: transparent !important;
+  --card-bg: transparent !important;
+  --card-shadow: none !important;
+  --blur-amount: 0px !important;
+}
+
+[data-visual="border-led"] {
+  --surface-color: var(--bg-color) !important;
+  --surface-border: var(--text-muted) !important;
+  --card-shadow: none !important;
+  --blur-amount: 0px !important;
+}
+
+[data-visual="glassmorphism"] {
+  --surface-color: rgba(255, 255, 255, 0.05) !important;
+  --surface-border: rgba(255, 255, 255, 0.2) !important;
+  --card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
+  --blur-amount: 24px !important;
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  --card-radius: 20px !important;
+}
+
+[data-visual="neo-brutalism"] {
+  --border-width: 3px !important;
+  --surface-border: var(--text-main) !important;
+  --card-shadow: 4px 4px 0px var(--text-main) !important;
+  --card-radius: 0px !important;
+  --btn-radius: 0px !important;
+  --blur-amount: 0px !important;
+  --primary-glow: transparent !important;
+}
+
+/* Ensure buttons in neo-brutalism also get the correct borders */
+[data-visual="neo-brutalism"] .btn {
+  border: 3px solid var(--text-main);
+  box-shadow: 3px 3px 0px var(--text-main) !important;
+}
+
+[data-visual="neo-brutalism"] .btn:hover {
+  transform: translateY(0); /* Disable initial hover lift for brutalism, keep it harsh */
+  box-shadow: 4px 4px 0px var(--text-main) !important;
+}
+
+/* --- DESIGN LANGUAGE OVERRIDES --- */
+[data-design="strict-linear"] {
+  --motion-duration: 0.1s !important;
+  --motion-easing: linear !important;
+  --hover-lift: 0px !important;
+  --active-scale: 1 !important;
+}
+
+[data-design="playful-spring"] {
+  --motion-duration: 0.6s !important;
+  --motion-easing: cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  --hover-lift: -8px !important;
+  --active-scale: 0.9 !important;
+}
+
+[data-design="strict-linear"] .animate-fade-in {
+  animation-duration: 0.1s;
+  animation-timing-function: linear;
+}
+
+[data-design="playful-spring"] .animate-fade-in {
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --- SETTINGS RESPONSIVE LAYOUT --- */
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.setting-control {
+  width: 320px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 860px) {
+  .setting-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .setting-control {
+    width: 100%;
+  }
+}
+
+/* --- GLOBAL SCROLLBAR POLISHING --- */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--surface-border);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-muted);
+}
+
+/* --- PAGE STRUCTURAL ABSTRACTIONS --- */
+.bento-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 3fr) 1fr;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  gap: 2px;
+  background: var(--surface-border);
+}
+
+.security-split {
+  display: flex;
+  height: 100%;
+  background: var(--bg-color);
+}
+.security-left {
+  width: 350px;
+  border-right: 1px solid var(--surface-border);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-color);
+}
+.security-right {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .security-split {
+    flex-direction: column;
+    height: auto;
+  }
+  .security-left {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--surface-border);
+  }
+  .security-right {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 860px) {
+  /* Typography overrides for extreme small screens */
+  .hero-title {
+    font-size: 2.2rem !important;
+  }
+  .hero-stat {
+    font-size: 2.5rem !important;
+  }
+  .bento-top-row {
+    flex-direction: column;
+    gap: 20px !important;
+  }
+  .bento-globe {
+    display: none; /* Hide giant decorators on mobile */
+  }
+}
+
+
+

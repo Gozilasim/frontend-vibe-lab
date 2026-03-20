@@ -1,0 +1,46 @@
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle background accent behind the content */
+.main-content::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.content-wrapper {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@media (max-width: 860px) {
+  .main-content {
+    /* Prevent content from being hidden behind the bottom fixed dock */
+    padding-bottom: 90px; 
+  }
+  .content-wrapper {
+    padding: 24px 16px;
+  }
+}
+
