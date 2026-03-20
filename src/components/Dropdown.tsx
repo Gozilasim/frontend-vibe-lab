@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown, Info } from 'lucide-react';
+import { ChevronDown, Info, MousePointer2 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 interface Option {
@@ -14,12 +14,83 @@ interface DropdownProps {
   type: 'art' | 'visual' | 'design';
 }
 
+/* ── Simulated Interactive Stage for Design Language previews ── */
+const DesignMotionPreview = () => {
+  const [phase, setPhase] = useState(0); // 0=rest, 1=hover-card, 2=rest, 3=click-btn
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setPhase(prev => (prev + 1) % 4);
+    }, 1200);
+    return () => clearInterval(timer);
+  }, []);
+
+  const isHoveringCard = phase === 1;
+  const isClickingBtn = phase === 3;
+
+  // Cursor follows the action
+  const cursorPos = {
+    0: { top: '80%', left: '15%' },
+    1: { top: '32%', left: '55%' },
+    2: { top: '65%', left: '75%' },
+    3: { top: '75%', left: '50%' },
+  }[phase] || { top: '80%', left: '15%' };
+
+  return (
+    <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px', position: 'relative', minHeight: '170px' }}>
+      <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '1.5px', color: 'var(--text-muted)', fontWeight: 700 }}>
+        Motion Simulation
+      </span>
+
+      {/* Card: uses var(--hover-lift) for hover translation */}
+      <div style={{
+        padding: '14px',
+        borderRadius: 'var(--card-radius, 8px)',
+        border: 'var(--border-width, 1px) solid var(--surface-border)',
+        background: 'var(--surface-color)',
+        transform: isHoveringCard ? 'translateY(var(--hover-lift, -4px))' : 'translateY(0)',
+        boxShadow: isHoveringCard ? 'var(--card-shadow, 0 8px 24px rgba(0,0,0,0.2))' : '0 2px 4px rgba(0,0,0,0.05)',
+        transition: 'transform var(--motion-duration) var(--motion-easing), box-shadow var(--motion-duration) var(--motion-easing)',
+      }}>
+        <div style={{ width: '60%', height: '8px', borderRadius: '4px', background: 'var(--text-muted)', opacity: 0.3, marginBottom: '8px' }} />
+        <div style={{ width: '40%', height: '6px', borderRadius: '4px', background: 'var(--text-muted)', opacity: 0.2 }} />
+      </div>
+
+      {/* Button: uses var(--active-scale) for click scale */}
+      <button className="btn" style={{
+        width: '100%',
+        padding: '10px',
+        fontSize: '0.8rem',
+        transform: isClickingBtn ? 'scale(var(--active-scale, 0.95))' : 'scale(1)',
+        transition: 'transform var(--motion-duration) var(--motion-easing)',
+      }}>
+        Click Target
+      </button>
+
+      {/* Animated Virtual Cursor */}
+      <MousePointer2
+        size={20}
+        style={{
+          position: 'absolute',
+          top: cursorPos.top,
+          left: cursorPos.left,
+          color: 'var(--primary-color)',
+          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))',
+          transition: 'top var(--motion-duration) var(--motion-easing), left var(--motion-duration) var(--motion-easing)',
+          zIndex: 10,
+          pointerEvents: 'none',
+        }}
+      />
+    </div>
+  );
+};
+
+/* ── Main Contrast Engine Preview ── */
 const AnimatedPreview = ({ type, targetValue, currentValue, renderUpwards }: { type: 'art'|'visual'|'design', targetValue: string, currentValue: string, renderUpwards: boolean }) => {
-  const { artDirection, visualDirection, designLanguage } = useTheme();
+  const { artDirection, visualDirection } = useTheme();
   const [showTarget, setShowTarget] = useState(false);
 
   useEffect(() => {
-    // Start interval
     const interval = setInterval(() => {
       setShowTarget(prev => !prev);
     }, 1200);
@@ -28,13 +99,12 @@ const AnimatedPreview = ({ type, targetValue, currentValue, renderUpwards }: { t
 
   const previewArt = type === 'art' ? (showTarget ? targetValue : currentValue) : artDirection;
   const previewVisual = type === 'visual' ? (showTarget ? targetValue : currentValue) : visualDirection;
-  const previewDesign = type === 'design' ? (showTarget ? targetValue : currentValue) : designLanguage;
+  // Design Language: always lock to the target value (no alternating) so physics are clearly visible
+  const previewDesign = type === 'design' ? targetValue : (showTarget ? targetValue : currentValue);
 
   return (
     <div 
       className="animated-preview-tooltip"
-      // Magic Architecture Implementation: Applying these datasets to the div 
-      // tricks the child elements into using the specified theme variants.
       data-theme={previewArt}
       data-visual={previewVisual}
       data-design={previewDesign}
@@ -69,21 +139,25 @@ const AnimatedPreview = ({ type, targetValue, currentValue, renderUpwards }: { t
       }}>
         <span style={{ textTransform: 'uppercase', letterSpacing: '1px' }}>Contrast Engine</span>
         <span style={{ fontWeight: 'bold', color: 'var(--primary-color)' }}>
-          {showTarget ? 'Target Style' : 'Current Style'}
+          {type === 'design' ? 'Motion Preview' : (showTarget ? 'Target Style' : 'Current Style')}
         </span>
       </div>
 
-      <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <div className="glass-card" style={{ padding: '16px', margin: 0 }}>
-          <h4 style={{ margin: '0 0 8px 0', fontSize: '1rem', color: 'var(--text-main)' }}>Design Systems</h4>
-          <p style={{ margin: '0 0 16px 0', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-            Structural properties, padding, borders, and motion physics instantly snap into place via cascading rules.
-          </p>
-          <button className="btn" style={{ width: '100%', padding: '10px', fontSize: '0.85rem' }}>
-            Interactive Content
-          </button>
+      {type === 'design' ? (
+        <DesignMotionPreview />
+      ) : (
+        <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div className="glass-card" style={{ padding: '16px', margin: 0 }}>
+            <h4 style={{ margin: '0 0 8px 0', fontSize: '1rem', color: 'var(--text-main)' }}>Design Systems</h4>
+            <p style={{ margin: '0 0 16px 0', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+              Structural properties, padding, borders, and motion physics instantly snap into place via cascading rules.
+            </p>
+            <button className="btn" style={{ width: '100%', padding: '10px', fontSize: '0.85rem' }}>
+              Interactive Content
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

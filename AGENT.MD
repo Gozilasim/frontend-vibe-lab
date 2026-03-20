@@ -20,3 +20,9 @@ When implementing or switching between Dark/Light modes, or different Art/Visual
 ## 4. AnimatedPreview Positioning & Clipping Prevention
 - The preview tooltip **MUST NOT** expand towards the nearest screen edge. When the Dropdown trigger is positioned closely to the right edge, the popup window must forcefully deploy towards the **left** (`right: calc(100% + 16px)`).
 - **CRITICAL OVERFLOW RULE**: The `<AnimatedPreview>` component (or any decorative absolute pop-out) MUST NOT be rendered inside an `overflowY: 'auto'` container. Doing so causes the browser to instantly clip and hide the overflowing tooltip. It must be rendered outside the scrollable menu container, anchored as a sibling directly inside the origin relative wrapper.
+
+## 5. Preview Content Must Be CSS-Variable-Driven (Never Hardcode Values)
+- When building any preview or simulation UI that demonstrates the effect of a theme/design setting, **ALL dynamic visual properties** (transforms, durations, easing curves, shadows, etc.) **MUST** reference the actual CSS custom properties (e.g., `var(--hover-lift)`, `var(--active-scale)`, `var(--motion-duration)`, `var(--motion-easing)`), **NOT** hardcoded magic numbers (e.g., `scale(1.08)`, `translateY(-4px)`).
+- **Why**: If you hardcode values, every preview variant renders identically because the numbers never change regardless of which option is being previewed. The entire purpose of the preview is to show *real differences* between options. Only by binding to the CSS variables — which are overridden per `data-theme` / `data-visual` / `data-design` attribute — will each option produce genuinely distinct visual output.
+- **Design Language special rule**: Since Design Language controls *interaction physics* (timing, easing, scale, lift), its preview should NOT alternate between "Current Style" and "Target Style". Instead, it must **lock** to the hovered target value so the motion engine's behavior is continuously and clearly visible.
+
