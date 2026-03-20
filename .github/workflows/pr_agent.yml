@@ -13,11 +13,28 @@ jobs:
       contents: write
 
     steps:
-      - name: PR Agent Review
+      - name: Run PR Agent
         uses: qodo-ai/pr-agent@main
         env:
           OPENAI_API_KEY: ${{ secrets.LLM_KEY }}
           OPENAI_API_BASE: https://openrouter.ai/api/v1
-          CONFIG.MODEL: deepseek/deepseek-chat:free
+          CONFIG.MODEL: qwen/qwen2.5-coder:free
+          CONFIG.CUSTOM_MODEL_MAX_TOKENS: "8000"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           github_action.auto_review: "true"
+
+          PR_REVIEWER.extra_instructions: |
+            You are a senior engineer reviewing a pull request.
+
+            Focus only on:
+            - bugs
+            - logical errors
+            - security issues
+            - performance problems
+
+            Ignore style comments.
+
+            Maximum 3 comments.
+
+            If nothing critical exists, reply:
+            "No critical issues found."
