@@ -260,6 +260,63 @@ p {
   box-shadow: 4px 4px 0px var(--text-main) !important;
 }
 
+/* =========================================================================
+   SURFACE TREATMENT (Material Quality Overrides)
+   These rules override shadows, blurs, and borders globally to change "material"
+   ========================================================================= */
+
+/* 1. Flat Matte: Kills all depth, blur, and gradients. Only solid colors and borders. */
+[data-surface="flat-matte"] {
+  --blur-amount: 0px !important;
+  --card-shadow: none !important;
+  --bg-gradient: none !important;
+  --surface-color: var(--bg-color) !important;
+  --card-bg: var(--bg-color) !important;
+}
+
+[data-surface="flat-matte"] .glass-panel,
+[data-surface="flat-matte"] .glass-card {
+  border: var(--border-width, 1px) solid var(--surface-border) !important;
+  background: var(--bg-color) !important;
+}
+
+/* 2. Glassmorphism: Extreme blur, deep shadows, bright inner reflections */
+[data-surface="glassmorphism"] {
+  --blur-amount: 32px !important;
+  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25) !important;
+}
+
+[data-surface="glassmorphism"] .glass-panel,
+[data-surface="glassmorphism"] .glass-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: var(--card-shadow);
+}
+
+/* Specific compensation for Light mode soft-minimal glass */
+[data-theme="soft-minimal"][data-surface="glassmorphism"] .glass-panel,
+[data-theme="soft-minimal"][data-surface="glassmorphism"] .glass-card {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.9) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.6) !important;
+}
+
+/* 3. Tonal Layering: No borders, no shadows. Depth achieved purely through color steps. */
+[data-surface="tonal-layering"] {
+  --card-shadow: none !important;
+  --border-width: 0px !important;
+  --surface-border: transparent !important;
+}
+
+[data-surface="tonal-layering"] .glass-panel,
+[data-surface="tonal-layering"] .glass-card {
+  border: none !important;
+  box-shadow: none !important;
+  background: var(--surface-color) !important;
+}
+
+
 /* --- DESIGN LANGUAGE OVERRIDES --- */
 [data-design="strict-linear"] {
   --motion-duration: 0.1s !important;

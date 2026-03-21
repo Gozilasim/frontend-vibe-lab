@@ -1,5 +1,5 @@
-import { useTheme, type ArtDirection, type VisualDirection, type DesignLanguage } from '../context/ThemeContext';
-import { Settings as SettingsIcon, Palette, Layers, MousePointerClick } from 'lucide-react';
+import { useTheme, type ArtDirection, type VisualDirection, type DesignLanguage, type SurfaceTreatment } from '../context/ThemeContext';
+import { Settings as SettingsIcon, Palette, Layers, MousePointerClick, Box } from 'lucide-react';
 import { Dropdown } from '../components/Dropdown';
 
 const artOptions = [
@@ -23,9 +23,20 @@ const designOptions = [
   { value: 'playful-spring', label: 'Playful-Spring (Exaggerated elastic bounce)' },
 ];
 
+const surfaceOptions = [
+  { value: 'default', label: 'Default (Theme base texture)' },
+  { value: 'flat-matte', label: 'Flat Matte (Pure flat, zero shadows/blur)' },
+  { value: 'glassmorphism', label: 'Glassmorphism (High blur reflection)' },
+  { value: 'tonal-layering', label: 'Tonal Layering (No borders, depth via brightness steps)' },
+];
 
 export const Settings = () => {
-  const { artDirection, setArtDirection, visualDirection, setVisualDirection, designLanguage, setDesignLanguage } = useTheme();
+  const { 
+    artDirection, setArtDirection, 
+    visualDirection, setVisualDirection, 
+    designLanguage, setDesignLanguage,
+    surfaceTreatment, setSurfaceTreatment 
+  } = useTheme();
 
   return (
     <div className="animate-fade-in" style={{ paddingBottom: '40px' }}>
@@ -107,6 +118,31 @@ export const Settings = () => {
               value={designLanguage}
               onChange={(val) => setDesignLanguage(val as DesignLanguage)}
               options={designOptions}
+            />
+          </div>
+        </div>
+
+        <div style={{ height: '1px', background: 'var(--surface-border)' }} />
+
+        {/* Surface Treatment Block */}
+        <div className="setting-row">
+          <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+              <div style={{ padding: '8px', background: 'var(--primary-glow, rgba(139, 92, 246, 0.2))', borderRadius: '10px', color: 'var(--primary-color)' }}>
+                <Box size={20} />
+              </div>
+              <h2 style={{ margin: 0, fontSize: '1.2rem' }}>Surface Treatment (Material Quality)</h2>
+            </div>
+            <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+              Define the physical material of identical surfaces. Changes how light interacts with UI (blur, flat matte absorption, subtle depth steps without shadow).
+            </p>
+          </div>
+          <div className="setting-control">
+            <Dropdown
+              type="surface"
+              value={surfaceTreatment}
+              onChange={(val) => setSurfaceTreatment(val as SurfaceTreatment)}
+              options={surfaceOptions}
             />
           </div>
         </div>
