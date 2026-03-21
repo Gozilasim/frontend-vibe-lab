@@ -18,5 +18,5 @@ jobs:
         uses: qodo-ai/pr-agent@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI__KEY: ${{ secrets.LLM_KEY }}
-          OPENAI__API_BASE: https://api.groq.com/openai/v1
+          GROQ_API_KEY: ${{ secrets.LLM_KEY }}
+          GROQ_API_BASE: https://api.groq.com/openai/v1
