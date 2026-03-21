@@ -1,6 +1,6 @@
 [config]
-model = "llama-3.3-70b-versatile"
-fallback_models = ["llama-3.1-8b-instant"]
+model = "groq/llama-3.3-70b-versatile"
+fallback_models = ["groq/llama-3.1-8b-instant"]
 custom_model_max_tokens = 8000
 max_model_tokens = 8000
 
