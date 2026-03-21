@@ -11,7 +11,7 @@ interface DropdownProps {
   value: string;
   onChange: (val: string) => void;
   options: Option[];
-  type: 'art' | 'visual' | 'design';
+  type: 'art' | 'visual' | 'design' | 'surface';
 }
 
 /* ── Simulated Interactive Stage for Design Language previews ── */
@@ -86,8 +86,8 @@ const DesignMotionPreview = () => {
 };
 
 /* ── Main Contrast Engine Preview ── */
-const AnimatedPreview = ({ type, targetValue, currentValue, renderUpwards }: { type: 'art'|'visual'|'design', targetValue: string, currentValue: string, renderUpwards: boolean }) => {
-  const { artDirection, visualDirection } = useTheme();
+const AnimatedPreview = ({ type, targetValue, currentValue, renderUpwards }: { type: 'art'|'visual'|'design'|'surface', targetValue: string, currentValue: string, renderUpwards: boolean }) => {
+  const { artDirection, visualDirection, surfaceTreatment } = useTheme();
   const [showTarget, setShowTarget] = useState(false);
 
   useEffect(() => {
@@ -99,6 +99,7 @@ const AnimatedPreview = ({ type, targetValue, currentValue, renderUpwards }: { t
 
   const previewArt = type === 'art' ? (showTarget ? targetValue : currentValue) : artDirection;
   const previewVisual = type === 'visual' ? (showTarget ? targetValue : currentValue) : visualDirection;
+  const previewSurface = type === 'surface' ? (showTarget ? targetValue : currentValue) : surfaceTreatment;
   // Design Language: always lock to the target value (no alternating) so physics are clearly visible
   const previewDesign = type === 'design' ? targetValue : (showTarget ? targetValue : currentValue);
 
@@ -108,6 +109,7 @@ const AnimatedPreview = ({ type, targetValue, currentValue, renderUpwards }: { t
       data-theme={previewArt}
       data-visual={previewVisual}
       data-design={previewDesign}
+      data-surface={previewSurface}
       style={{
         position: 'absolute',
         top: renderUpwards ? 'auto' : '-16px',

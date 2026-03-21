@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from '
 export type ArtDirection = 'default-nova' | 'editorial-dark' | 'control-room' | 'soft-minimal';
 export type VisualDirection = 'default' | 'typography-led' | 'border-led' | 'glassmorphism' | 'neo-brutalism';
 export type DesignLanguage = 'default' | 'strict-linear' | 'playful-spring';
+export type SurfaceTreatment = 'default' | 'flat-matte' | 'glassmorphism' | 'tonal-layering';
 
 interface ThemeContextType {
   artDirection: ArtDirection;
@@ -11,6 +12,8 @@ interface ThemeContextType {
   setVisualDirection: (visual: VisualDirection) => void;
   designLanguage: DesignLanguage;
   setDesignLanguage: (design: DesignLanguage) => void;
+  surfaceTreatment: SurfaceTreatment;
+  setSurfaceTreatment: (surface: SurfaceTreatment) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -28,6 +31,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     return (localStorage.getItem('designLanguage') as DesignLanguage) || 'default';
   });
 
+  const [surfaceTreatment, setSurfaceTreatment] = useState<SurfaceTreatment>(() => {
+    return (localStorage.getItem('surfaceTreatment') as SurfaceTreatment) || 'default';
+  });
+
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', artDirection);
     localStorage.setItem('artDirection', artDirection);
@@ -43,8 +50,18 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('designLanguage', designLanguage);
   }, [designLanguage]);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-surface', surfaceTreatment);
+    localStorage.setItem('surfaceTreatment', surfaceTreatment);
+  }, [surfaceTreatment]);
+
   return (
-    <ThemeContext.Provider value={{ artDirection, setArtDirection, visualDirection, setVisualDirection, designLanguage, setDesignLanguage }}>
+    <ThemeContext.Provider value={{ 
+      artDirection, setArtDirection, 
+      visualDirection, setVisualDirection, 
+      designLanguage, setDesignLanguage,
+      surfaceTreatment, setSurfaceTreatment
+    }}>
       {children}
     </ThemeContext.Provider>
   );
